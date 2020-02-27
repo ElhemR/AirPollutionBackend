@@ -3,7 +3,7 @@ const City = require('../models/city.model.js');
 
 // Retrieve and return all cities from the database.
 exports.findAll = (req, res) => {
-    City.find()
+    City.find().populate('country', null)
         .then(cities => {
             res.send(cities);
         }).catch(err => {

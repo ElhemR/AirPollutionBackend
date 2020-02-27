@@ -1,19 +1,18 @@
 
 const mongoose = require('mongoose');
+const Country=require('./country.model.js');
 const Schema = mongoose.Schema;
 
 
 const City = new Schema({
 	cityname: String,
 	qaindex: String,
-	country: [{ type: Schema.Types.ObjectId, ref: 'Contry' }],
+	country: [{ type: Schema.Types.ObjectId, ref: 'Country' }],
 }, {
 	toJSON: {
 		virtuals: true,
 	},
-},
-  {
-  	collection: 'cities'
-  });
+}
+ );
 
 module.exports = mongoose.model('City', City);

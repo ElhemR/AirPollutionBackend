@@ -10,10 +10,9 @@ const Country = new Schema({
         toJSON: {
             virtuals: true,
         },
-    },,
+    },
     {
         collection: 'countries'
     });
 
 const CountryModel = mongoose.model('Country', Country);
-export default CountryModel;
