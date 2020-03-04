@@ -3,6 +3,6 @@ module.exports = (app) => {
 
     // Retrieve all cities
     app.get('/cities', cities.findAll);
-
+    app.post('/city/add', cities.addCountry);
 
 }

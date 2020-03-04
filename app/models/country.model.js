@@ -13,6 +13,8 @@ const Country = new Schema({
     },
     {
         collection: 'countries'
-    });
+    },
+    { versionKey: false });
 
-const CountryModel = mongoose.model('Country', Country);
+module.exports = mongoose.model('Country', Country);
+
