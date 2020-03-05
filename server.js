@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
+const cors = require('cors');
+const jwt = require('jsonwebtoken');
+var expressJWT = require('express-jwt');
 // create express app
 const app = express();
 
@@ -8,9 +10,32 @@ const app = express();
 app.use(bodyParser.urlencoded({
     extended: true
 })); 
-
+app.use(cors());
+app.options('*', cors());
 // parse requests of content-type - application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
+
+
+let secret = 'XPZZfN0NOml3z9FMfmpgX';
+
+/* CREATE TOKEN FOR USE */
+app.get('/token/sign', (req, res) => {
+    var userData = {
+        "name": "admin",
+        "id": "5614"
+    }
+    let token = jwt.sign(userData, secret, { expiresIn: '28000' })
+    res.status(200).json({ "token": token });
+});
+
+app.use(expressJWT({ secret: secret })
+    .unless(
+        {
+            path: [
+                '/token/sign'
+            ]
+        }
+    ));
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", '*'); //<-- you can change this with a specific url like http://localhost:4200
     res.header("Access-Control-Allow-Credentials", true);
@@ -37,6 +62,8 @@ mongoose.connect(dbConfig.url, {
 app.get('/', (req, res) => {
     res.json({ "message": " default route " });
 });
+
+
 require('./app/routes/city.routes.js')(app);
 require('./app/routes/country.routes.js')(app);
 // listen for requests
