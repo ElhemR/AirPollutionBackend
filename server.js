@@ -24,7 +24,7 @@ app.get('/token/sign', (req, res) => {
         "name": "admin",
         "id": "5614"
     }
-    let token = jwt.sign(userData, secret, { expiresIn: '28000' })
+    let token = jwt.sign(userData, secret, { expiresIn: '24h' })
     res.status(200).json({ "token": token });
 });
 
